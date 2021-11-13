@@ -2,7 +2,7 @@ module Picshare exposing (main)
 
 import Browser
 import Html exposing (..)
-import Html.Attributes exposing (class, placeholder, src, type_, value, disabled)
+import Html.Attributes exposing (class, disabled, placeholder, src, type_, value)
 import Html.Events exposing (onClick, onInput, onSubmit)
 
 
@@ -62,7 +62,7 @@ viewComments : Model -> Html Msg
 viewComments model =
     div []
         [ viewCommentList model.comments
-        , form [ class "new-comment", onSubmit SaveComment]
+        , form [ class "new-comment", onSubmit SaveComment ]
             [ input
                 [ type_ "text"
                 , placeholder "Add a comment..."
@@ -77,13 +77,22 @@ viewComments model =
         ]
 
 
-type alias Model =
-    { url : String
+type alias Id =
+    Int
+
+
+type alias Photo =
+    { id : Id
+    , url : String
     , caption : String
     , liked : Bool
     , comments : List String
     , newComment : String
     }
+
+
+type alias Model =
+    Photo
 
 
 baseUrl : String
@@ -93,7 +102,8 @@ baseUrl =
 
 initialModel : Model
 initialModel =
-    { url = baseUrl ++ "1.jpg"
+    { id = 1
+    , url = baseUrl ++ "1.jpg"
     , caption = "Surfing"
     , liked = False
     , comments = [ "Cowabunga, dude!" ]
